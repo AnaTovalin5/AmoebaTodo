@@ -46,12 +46,28 @@ public class TodoActivity extends Activity implements OnClickListener {
         addItemButton = (Button)findViewById(R.id.addItemButton);
 
         addItemButton.setOnClickListener(this);
-
+        FileInputStream inputStream = null;
         try {
-            FileInputStream inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(file);
+            byte fileContent[] = new byte[(int)file.length()];
+            inputStream.read(fileContent);
+            String fileGuts = new String(fileContent);
+            System.out.println("FileGuts: " + fileGuts);
         }catch(FileNotFoundException e) {
             Log.e("TodoActivity", "FileNotFoundException: " + e);
+        }catch(IOException megantron){
+            Log.e("TodoActivity", "IOException: " + megantron);
         }
+        finally{
+            try{
+                if(inputStream != null){
+                    inputStream.close();
+                }
+            }catch(IOException ana){
+                Log.e("TodoActivity", "IOException: " + ana);
+            }
+        }
+
 
 
     }
